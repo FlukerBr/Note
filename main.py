@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 import os
 
-from PySimpleGUI.PySimpleGUI import Window
+
 raiz = os.getcwd()
 class app:
     def cria_note(self):
@@ -46,7 +46,7 @@ class app:
         sg.theme('DarkTeal9')
         layout = [
             [sg.Text('Título :'), sg.Input(key='titulo', size=(20, 1)), sg.Button('Add', size=(5, 1))],
-            [sg.Listbox(values=iniciar.list_notes(), size=(20, 20), key='-notes-'), sg.Button('Open')]
+            [sg.Listbox(values=iniciar.list_notes(), size=(20, 20), key='-notes-'), sg.Button('Open'), sg.Button('Del')]
         ]
         window = sg.Window('Notes', layout, size=(350, 200), icon='./assets/notes/icon.ico')
         while True:
@@ -62,5 +62,7 @@ class app:
                 self.titulo = value['titulo']
                 iniciar.cria_note()
             window['-notes-'].update(values=iniciar.list_notes())
+            if event == 'Del':
+                os.remove(r'{0}\assets\notes\{1}'.format(raiz, value['-notes-']))
 iniciar = app()
 iniciar.main()
